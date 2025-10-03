@@ -37,13 +37,13 @@ async def get_metrics(body: RequestBody):
         avg_uptime = float(np.mean(uptimes))
         breaches = sum(1 for x in latencies if x > body.threshold_ms)
 
-        result[region_name] = {
+        result["regions"].append({
             "region": region_name,
             "avg_latency": round(avg_latency, 2),
             "p95_latency": round(p95_latency, 2),
             "avg_uptime": round(avg_uptime, 3),
             "breaches": breaches,
-        }
+        })
     return result
 
 
