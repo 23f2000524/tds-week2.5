@@ -26,8 +26,8 @@ class RequestBody(BaseModel):
 @app.post("/api/latency")
 async def get_metrics(body: RequestBody):
     result = {}
-    for region in body.regions:
-        data = [r for r in telemetry if r["region"] == region]
+    for region_name in body.regions:
+        data = [r for r in telemetry if r["region"] == region_name]
         if not data:
             continue
         latencies = [r["latency_ms"] for r in data]
@@ -37,8 +37,8 @@ async def get_metrics(body: RequestBody):
         avg_uptime = float(np.mean(uptimes))
         breaches = sum(1 for x in latencies if x > body.threshold_ms)
 
-        result[region] = {
-            "region": region,
+        result[region_name] = {
+            "region": region_name,
             "avg_latency": round(avg_latency, 2),
             "p95_latency": round(p95_latency, 2),
             "avg_uptime": round(avg_uptime, 3),
