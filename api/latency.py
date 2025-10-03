@@ -30,6 +30,7 @@ async def get_metrics(body: RequestBody):
         data = [r for r in telemetry if r["region"] == region]
         if not data:
             continue
+        region = [r["region"] for r in data]
         latencies = [r["latency_ms"] for r in data]
         uptimes = [r["uptime_pct"] for r in data]
         avg_latency = float(np.mean(latencies))
@@ -38,7 +39,7 @@ async def get_metrics(body: RequestBody):
         breaches = sum(1 for x in latencies if x > body.threshold_ms)
 
         result[region] = {
-            "region": r["region"],
+            "region": region,
             "avg_latency": round(avg_latency, 2),
             "p95_latency": round(p95_latency, 2),
             "avg_uptime": round(avg_uptime, 3),
