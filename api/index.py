@@ -45,6 +45,3 @@ async def get_metrics(body: RequestBody):
     return result
 
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
