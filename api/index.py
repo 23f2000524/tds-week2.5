@@ -22,7 +22,7 @@ class RequestBody(BaseModel):
     regions: list[str]
     threshold_ms: float
 
-@app.post("/index")
+@app.post("/")
 async def get_metrics(body: RequestBody):
     result = {}
     for region in body.regions:
