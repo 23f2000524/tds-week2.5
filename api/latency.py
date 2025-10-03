@@ -26,6 +26,7 @@ class RequestBody(BaseModel):
 @app.post("/api/latency")
 async def get_metrics(body: RequestBody):
     result = {}
+    result["regions"]=[]
     for region_name in body.regions:
         data = [r for r in telemetry if r["region"] == region_name]
         if not data:
