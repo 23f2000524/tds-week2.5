@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],     
 )
 
-with open(os.path.join(os.path.dirname(__file__), "latency.json")) as f:
+with open(os.path.join(os.path.dirname(__file__), "latencydata.json")) as f:
     telemetry = json.load(f)
 
 class RequestBody(BaseModel):
