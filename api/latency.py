@@ -13,6 +13,7 @@ app.add_middleware(
     allow_origins=["*"],     
     allow_methods=["*"],   
     allow_headers=["*"],     
+    expose_headers=["*"]
 )
 
 with open(os.path.join(os.path.dirname(__file__), "latencydata.json")) as f:
@@ -37,6 +38,7 @@ async def get_metrics(body: RequestBody):
         breaches = sum(1 for x in latencies if x > body.threshold_ms)
 
         result[region] = {
+            "region": r["region"],
             "avg_latency": round(avg_latency, 2),
             "p95_latency": round(p95_latency, 2),
             "avg_uptime": round(avg_uptime, 3),
