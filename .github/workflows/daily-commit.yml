@@ -2,8 +2,8 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '11 15 * * *'   # runs daily at 15:11 UTC
-  workflow_dispatch:         # allows manual trigger
+    - cron: '11 15 * * *'   # daily at 15:11 UTC
+  workflow_dispatch:
 
 jobs:
   commit:
@@ -12,11 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: main  # make sure this matches your default branch
+          ref: main
+          persist-credentials: true  # ensures the token is available for push
 
       - name: Add commit by 23f2000524@ds.study.iitm.ac.in
         run: |
-          # Generate a random filename
+          # Generate a new random file
           FILENAME="daily_commit_$(date +%s)_$RANDOM.txt"
           echo "Automated daily commit at $(date)" > $FILENAME
 
@@ -26,5 +27,5 @@ jobs:
 
           # Add, commit, and push
           git add $FILENAME
-          git commit -m "Automated daily commit: $FILENAME"
-          git push
+          git commit -m "Automated daily commit: $FILENAME" || echo "Nothing to commit"
+          git push origin main
