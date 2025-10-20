@@ -1,10 +1,9 @@
 name: Daily Commit
 
-# Run once per day at 10:30 UTC (change to your preferred time)
 on:
   schedule:
-    - cron: '15 15 * * *'
-  workflow_dispatch:
+    - cron: '11 15 * * *'   # runs daily at 15:11 UTC
+  workflow_dispatch:         # allows manual trigger
 
 jobs:
   commit:
@@ -12,12 +11,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: main  # make sure this matches your default branch
 
       - name: Add commit by 23f2000524@ds.study.iitm.ac.in
         run: |
-          echo "Daily commit at $(date)" >> daily_commit.txt
+          # Generate a random filename
+          FILENAME="daily_commit_$(date +%s)_$RANDOM.txt"
+          echo "Automated daily commit at $(date)" > $FILENAME
+
+          # Configure Git
           git config user.name "Daily Commit Bot"
           git config user.email "23f2000524@ds.study.iitm.ac.in"
-          git add daily_commit.txt
-          git commit -m "Automated daily commit"
+
+          # Add, commit, and push
+          git add $FILENAME
+          git commit -m "Automated daily commit: $FILENAME"
           git push
