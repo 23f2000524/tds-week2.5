@@ -3,7 +3,7 @@ name: Daily Commit
 # Run once per day at 10:30 UTC (change to your preferred time)
 on:
   schedule:
-    - cron: '11 15 * * *'
+    - cron: '15 15 * * *'
 
 jobs:
   commit:
