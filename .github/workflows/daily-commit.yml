@@ -4,6 +4,7 @@ name: Daily Commit
 on:
   schedule:
     - cron: '15 15 * * *'
+  workflow_dispatch:
 
 jobs:
   commit:
