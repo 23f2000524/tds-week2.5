@@ -12,20 +12,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: main
-          persist-credentials: true  # ensures the token is available for push
+          ref: main               # make sure this is your default branch
+          persist-credentials: true  # allows git push using the GitHub token
 
       - name: Add commit by 23f2000524@ds.study.iitm.ac.in
         run: |
-          # Generate a new random file
+          # Create a new random file to ensure a commit
           FILENAME="daily_commit_$(date +%s)_$RANDOM.txt"
           echo "Automated daily commit at $(date)" > $FILENAME
 
-          # Configure Git
+          # Configure git
           git config user.name "Daily Commit Bot"
           git config user.email "23f2000524@ds.study.iitm.ac.in"
 
-          # Add, commit, and push
+          # Stage, commit, and push
           git add $FILENAME
-          git commit -m "Automated daily commit: $FILENAME" || echo "Nothing to commit"
+          git commit -m "Automated daily commit: $FILENAME"
           git push origin main
